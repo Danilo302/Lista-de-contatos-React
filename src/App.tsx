@@ -1,16 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import HeaderBusca from './containers/HeaderBusca/inde';
-import ListaContatos from './containers/ListaContatos';
+import React from 'react'
+import HeaderBusca from './containers/HeaderBusca'
+import ListaContatos from './containers/ListaContatos'
+import EstiloGlobal, { Container } from './styles'
 
 function App() {
   return (
     <>
-    <HeaderBusca />
-    <ListaContatos />
+      <EstiloGlobal />
+      <Container>
+        <HeaderBusca />
+        <ListaContatos />
+      </Container>
     </>
   )
 }
 
-export default App;
+export default App
