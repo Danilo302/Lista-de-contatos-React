@@ -1,42 +1,54 @@
+import { useSelector } from 'react-redux'
 import CardContato from '../../components/CardContato'
+import { RootReducer } from '../../store'
 import * as enums from '../../utils/enums/contato'
 
-const contatos = [
-  {
-    nome: 'Danilo Felix',
-    email: 'danilofelix@gamil.com',
-    telefone: 21999999999,
-    tipo: enums.Tipo.FAMILIA
-  },
-  {
-    nome: 'Peter Parker',
-    email: 'parkepeter@gamil.com',
-    telefone: 21988888888,
-    tipo: enums.Tipo.AMIGO
-  },
-  {
-    nome: 'Bruce Wayne',
-    email: 'batman@gamil.com',
-    telefone: 21977777777,
-    tipo: enums.Tipo.TRABALHO
-  }
-]
+const ListaContatos = () => {
+  const { itens } = useSelector((state: RootReducer) => state.contatos)
+  const { termo, tipo } = useSelector((state: RootReducer) => state.filtro)
 
-const ListaContatos = () => (
-  <main>
-    <ul>
-      {contatos.map((c) => (
-        <li key={c.telefone}>
-          <CardContato
-            nome={c.nome}
-            email={c.email}
-            telefone={c.telefone}
-            tipo={c.tipo}
-          />
-        </li>
-      ))}
-    </ul>
-  </main>
-)
+  const filtraContatos = () => {
+    let contatosFiltrados = itens
+    if (termo !== undefined) {
+      contatosFiltrados = contatosFiltrados.filter(
+        (item) => item.nome.toLowerCase().search(termo.toLowerCase()) >= 0
+      )
+      if (tipo === enums.Tipo.AMIGO) {
+        contatosFiltrados = contatosFiltrados.filter(
+          (item) => item.tipo === enums.Tipo.AMIGO
+        )
+      } else if (tipo === enums.Tipo.FAMILIA) {
+        contatosFiltrados = contatosFiltrados.filter(
+          (item) => item.tipo === enums.Tipo.FAMILIA
+        )
+      } else if (tipo === enums.Tipo.TRABALHO) {
+        contatosFiltrados = contatosFiltrados.filter(
+          (item) => item.tipo === enums.Tipo.TRABALHO
+        )
+      }
+      return contatosFiltrados
+    } else {
+      return itens
+    }
+  }
+
+  return (
+    <main>
+      <ul>
+        {filtraContatos().map((c) => (
+          <li key={c.telefone}>
+            <CardContato
+              id={c.id}
+              nome={c.nome}
+              email={c.email}
+              telefone={c.telefone}
+              tipo={c.tipo}
+            />
+          </li>
+        ))}
+      </ul>
+    </main>
+  )
+}
 
 export default ListaContatos
