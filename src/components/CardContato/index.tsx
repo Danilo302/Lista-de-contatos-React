@@ -1,10 +1,21 @@
-import { Card, InfoContato } from './styles'
+import { Card, InfoContato, Btn, TagTipo } from './styles'
+import * as enums from '../../utils/enums/contato'
 
-const CardContato = () => (
+type Props = {
+  nome: string
+  email: string
+  telefone: number
+  tipo: enums.Tipo
+}
+
+const CardContato = ({ nome, email, telefone, tipo }: Props) => (
   <Card>
-    <InfoContato>Danilo</InfoContato>
-    <InfoContato>danilofelix999@gmail.com</InfoContato>
-    <InfoContato>9999999</InfoContato>
+    <InfoContato>{nome}</InfoContato>
+    <InfoContato>{email}</InfoContato>
+    <InfoContato>{telefone}</InfoContato>
+    <TagTipo tipo={tipo}>{tipo}</TagTipo>
+    <Btn>Editar</Btn>
+    <Btn>Remover</Btn>
   </Card>
 )
 
