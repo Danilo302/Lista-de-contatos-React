@@ -1,17 +1,29 @@
 import React from 'react'
-import HeaderBusca from './containers/HeaderBusca'
-import ListaContatos from './containers/ListaContatos'
-import EstiloGlobal, { Container } from './styles'
 import { Provider } from 'react-redux'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import EstiloGlobal, { Container } from './styles'
 import store from './store'
+import Home from './pages/Home'
+import NovoContato from './pages/NovoContato'
+
+const rotas = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />
+  },
+  {
+    path: 'novo',
+    element: <NovoContato />
+  }
+])
 
 function App() {
   return (
     <Provider store={store}>
       <EstiloGlobal />
       <Container>
-        <HeaderBusca />
-        <ListaContatos />
+        <RouterProvider router={rotas} />
       </Container>
     </Provider>
   )
