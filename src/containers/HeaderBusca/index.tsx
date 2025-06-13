@@ -4,6 +4,7 @@ import { RootReducer } from '../../store'
 import { alterarTermo } from '../../store/reducers/filtro'
 import * as enums from '../../utils/enums/contato'
 import { BtnContainer, HeaderContainer } from './styles'
+import { TitleMain } from '../../styles'
 
 const HeaderBusca = () => {
   const dispatch = useDispatch()
@@ -11,7 +12,7 @@ const HeaderBusca = () => {
 
   return (
     <HeaderContainer>
-      <h1>Lista de Contatos</h1>
+      <TitleMain>Lista de Contatos</TitleMain>
       <input
         type="text"
         placeholder="Pesquisar"

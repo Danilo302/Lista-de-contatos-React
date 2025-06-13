@@ -1,5 +1,13 @@
+import FormularioNovo from '../../containers/FormularioNovo'
+import { Container, TitleMain } from '../../styles'
+
 const NovoContato = () => {
-  return <div>Novo contato</div>
+  return (
+    <Container>
+      <TitleMain>Novo Contato</TitleMain>
+      <FormularioNovo />
+    </Container>
+  )
 }
 
 export default NovoContato
