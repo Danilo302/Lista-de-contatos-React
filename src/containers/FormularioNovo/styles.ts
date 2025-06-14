@@ -39,3 +39,32 @@ export const FormLabel = styled.label`
   color: #555;
   cursor: pointer;
 `
+export const BotoesContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`
+export const FormBtn = styled.button`
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #4caf50;
+  color: white;
+
+  &&:hover {
+    background-color: #3e8e41;
+    transform: translateY(-2px);
+  }
+`
+export const FormBtnCancelar = styled(FormBtn)`
+  background-color: #f44336;
+
+  &&:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+  }
+`
