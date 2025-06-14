@@ -1,4 +1,4 @@
-import { Card, InfoContato, Btn, TagTipo } from './styles'
+import * as S from './styles'
 import { useDispatch } from 'react-redux'
 import { remover } from '../../store/reducers/contatos'
 import Contato from '../../models/contato'
@@ -15,14 +15,20 @@ const CardContato = ({ nome, email, telefone, tipo, id }: Props) => {
   }
 
   return (
-    <Card>
-      <InfoContato>{nome}</InfoContato>
-      <InfoContato>{email}</InfoContato>
-      <InfoContato>{telefone}</InfoContato>
-      <TagTipo tipo={tipo}>{tipo}</TagTipo>
-      <Btn onClick={() => editarContato(id)}>Editar</Btn>
-      <Btn onClick={() => dispatch(remover(id))}>Remover</Btn>
-    </Card>
+    <S.Card>
+      <S.CardInfo>
+        <div>
+          <S.InfoContato>{nome}</S.InfoContato>
+          <S.InfoContato>{email}</S.InfoContato>
+          <S.InfoContato>{telefone}</S.InfoContato>
+        </div>
+        <S.TagTipo tipo={tipo}>{tipo}</S.TagTipo>
+      </S.CardInfo>
+      <S.BtnDiv>
+        <S.Btn onClick={() => editarContato(id)}>Editar</S.Btn>
+        <S.Btn onClick={() => dispatch(remover(id))}>Remover</S.Btn>
+      </S.BtnDiv>
+    </S.Card>
   )
 }
 
