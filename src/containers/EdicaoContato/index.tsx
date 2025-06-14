@@ -1,30 +1,44 @@
 import { FormEvent, useState } from 'react'
-import * as S from './styles'
-import { useDispatch } from 'react-redux'
+import * as S from '../FormularioNovo/styles'
+import { useDispatch, useSelector } from 'react-redux'
 import * as enums from '../../utils/enums/contato'
-import { cadastrar } from '../../store/reducers/contatos'
-import { useNavigate } from 'react-router-dom'
+import Contato from '../../models/contato'
+import { editar } from '../../store/reducers/contatos'
+import { RootReducer } from '../../store'
+import { useNavigate, useParams } from 'react-router-dom'
 import validacaoTelefone from '../../utils/mask/maskTelefone'
 
-const FormularioNovo = () => {
+const EdicaoContato = () => {
+  const { id } = useParams()
+  const { itens } = useSelector((state: RootReducer) => state.contatos)
+
+  const contato = itens.find((item) => item.id.toString() === id)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [tipo, setTipo] = useState(enums.Tipo.AMIGO)
+  const [nome, setNome] = useState(contato ? contato.nome : '')
+  const [email, setEmail] = useState(contato ? contato.email : '')
+  const [telefone, setTelefone] = useState(contato ? contato.telefone : '')
+  const [tipo, setTipo] = useState(contato ? contato.tipo : enums.Tipo.AMIGO)
+  const idContato = contato ? contato?.id : itens[-1].id + 1
 
-  const CadastrarContato = (evento: FormEvent) => {
+  const EditarContato = (evento: FormEvent) => {
     evento.preventDefault()
+    const contatoParaEditar = new Contato(
+      nome,
+      email,
+      telefone,
+      tipo,
+      idContato
+    )
 
-    dispatch(cadastrar({ nome, email, telefone, tipo }))
+    dispatch(editar(contatoParaEditar))
 
     navigate('/')
   }
 
   return (
-    <S.FormContainer onSubmit={CadastrarContato}>
+    <S.FormContainer onSubmit={EditarContato}>
       <S.FormInput
         type="text"
         placeholder="Nome Completo"
@@ -46,7 +60,6 @@ const FormularioNovo = () => {
         onChange={(evento) =>
           setTelefone(validacaoTelefone(evento.target.value))
         }
-        maxLength={15}
         required
       />
       <S.FormInputRadius
@@ -54,6 +67,7 @@ const FormularioNovo = () => {
         name="tipo"
         type="radio"
         id="amigo"
+        checked={tipo === enums.Tipo.AMIGO}
         onChange={(evento) => setTipo(evento.target.value as enums.Tipo)}
       />{' '}
       <S.FormLabel htmlFor="amigo">Amigo</S.FormLabel>
@@ -62,6 +76,7 @@ const FormularioNovo = () => {
         name="tipo"
         type="radio"
         id="familia"
+        checked={tipo === enums.Tipo.FAMILIA}
         onChange={(evento) => setTipo(evento.target.value as enums.Tipo)}
       />{' '}
       <S.FormLabel htmlFor="familia">Familía</S.FormLabel>
@@ -70,11 +85,12 @@ const FormularioNovo = () => {
         name="tipo"
         type="radio"
         id="trabalho"
+        checked={tipo === enums.Tipo.TRABALHO}
         onChange={(evento) => setTipo(evento.target.value as enums.Tipo)}
       />{' '}
       <S.FormLabel htmlFor="trabalho">Trabalho</S.FormLabel>
       <S.BotoesContainer>
-        <S.FormBtn type="submit">Cadastrar</S.FormBtn>
+        <S.FormBtn type="submit">Salvar</S.FormBtn>
         <S.FormBtnCancelar type="button" onClick={() => navigate('/')}>
           Cancelar
         </S.FormBtnCancelar>
@@ -83,4 +99,4 @@ const FormularioNovo = () => {
   )
 }
 
-export default FormularioNovo
+export default EdicaoContato
